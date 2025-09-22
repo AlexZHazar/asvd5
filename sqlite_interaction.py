@@ -173,9 +173,10 @@ SELECT t1.source_file,
         if rows:
             self.output_log += "-" * 40 + "<br>"
             for row in rows:
-                self.output_log += f"[{self.warning_mark}] Файл '{row[2]}' будет исключён, поскольку дублирует данные файла '{row[0]}': {row[1]} {row[3]} ".strip('0:') + '<br>'
+                self.output_log += f"[{self.warning_mark}] Файл '{row[2]}' исключён, поскольку дублирует данные из '{row[0]}': {row[1]} {row[3]} ".strip('0:') + '<br>'
                 self.sqlite_cursor.execute(f"delete from inquiry_data_py where source_file = '{row[2]}'")
-            self.output_log += "-" * 40 + "<br>"
+                self.sqlite_cursor.execute(f"delete from input_data where source_file = '{row[2]}'")
+            # self.output_log += "-" * 40 + "<br>"
 
         self.sqlite_cursor.execute("alter table inquiry_data_py add column order_number integer")
 
