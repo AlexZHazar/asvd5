@@ -1,0 +1,3 @@
+db_settings_path=bin\db_settings.sqlite
+sqlite_db_path=db\asvd.db
+source_folder_path=Data

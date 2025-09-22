@@ -1,0 +1,8 @@
+/output.xlsx
+/QT_designer.lnk
+/main.spec
+/test*
+/*.spec
+/Temp
+/_*
+/build/

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>XLSXLoader</class>
+ <widget class="QWidget" name="XLSXLoader">
+  <!-- property name="windowIcon">
+   <iconset>
+    <normaloff>OilTrain.png</normaloff>OilTrain.png</iconset>
+  </property -->
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Обработка</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,1">
+       <!-- SQLite DB Path Input -->
+       <!-- -->
+       <item>
+        <layout class="QHBoxLayout" name="sqliteDbLayout">
+         <item>
+          <widget class="QLabel" name="sqliteDbLabel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>  База данных:                  </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="sqliteDbInput"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="selectSqliteDbButton">
+           <property name="text">
+            <string>  Подключить...  </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <!-- -->
+       <!-- Folder Path Input + Button -->
+       <item>
+        <layout class="QHBoxLayout" name="folderLayout">
+         <item>
+          <widget class="QLabel" name="folderLabel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>  Папка с файлами .xlsx:  </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="folderInput"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="selectFolderButton">
+           <property name="text">
+            <string>     Выбрать...      </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <!-- Folder Path Input + Button -->
+       <!-- - ->
+       <item>
+        <layout class="QHBoxLayout" name="reportFolderLayout">
+         <item>
+          <widget class="QLabel" name="reportFolderLabel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>  Папка с отчётами:         </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="reportFolderInput"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="selectReportFolderButton">
+           <property name="text">
+            <string>     Выбрать...      </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <!- - -->
+       <!-- DB Path Input -->
+       <!-- - ->
+       <item>
+        <layout class="QHBoxLayout" name="dbLayout">
+         <item>
+          <widget class="QLabel" name="dbLabel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>  База Вагоны.accdb:       </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="dbInput"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="selectDbButton">
+           <property name="text">
+            <string>  Подключить...  </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <!- - -->
+       <item>
+        <widget class="QLabel" name="emptyLabel"/>
+       </item>
+       <!-- Load Button + Checkbox -->
+       <item>
+        <layout class="QHBoxLayout" name="loadLayout">
+         <item>
+          <widget class="QPushButton" name="loadButton">
+           <!-- property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed"/>
+           </property -->
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>    Обработать .xlsx файлы    </string>
+           </property>
+          </widget>
+         </item>
+         <!-- item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </spacer>
+         </item -->
+         <item>
+          <widget class="QLabel" name="emptyLabel"/>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="refreshCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>  С обновлением  </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_full_analysis">
+           <property name="text">
+            <string>Полный анализ</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </spacer>
+         </item>
+         <!-- disable for 1 button for everything -->
+         <item>
+          <widget class="QPushButton" name="pushButton_export_reports">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Формирование отчётов</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="emptyLabel"/>
+       </item>
+       <!-- Scrollable Log View -->
+       <item>
+        <widget class="QScrollArea" name="logScroll">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <layout class="QVBoxLayout" name="scrollLayout">
+           <item>
+            <widget class="QLabel" name="logText">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab2">
+      <attribute name="title">
+       <string>Вагон</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout2" stretch="0,0,0,0,0,1">
+       <item>
+        <layout class="QHBoxLayout" name="carriageLayout">
+         <!-- item>
+          <widget class="QLabel" name="carriageLabel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>  Вагон:  </string>
+           </property>
+          </widget>
+         </item -->
+         <item>
+          <widget class="QLineEdit" name="carriageInput">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="carriageButton">
+           <property name="text">
+            <string>       Найти       </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="carriageUpdateButton">
+           <property name="text">
+            <string>       Сохранить       </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="emptyLabel"/>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="formLayout"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab3">
+      <attribute name="title">
+       <string>Предприятие</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout3" stretch="0,0,0,0,0,1">
+       <item>
+        <layout class="QHBoxLayout" name="factoryLayout">
+         <!-- item>
+          <widget class="QLabel" name="factoryLabel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>  Предприятие:  </string>
+           </property>
+          </widget>
+         </item -->
+         <item>
+          <widget class="QLineEdit" name="factoryInput">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="factoryButton">
+           <property name="text">
+            <string>       Найти       </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="factoryUpdateButton">
+           <property name="text">
+            <string>       Сохранить       </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="emptyLabel"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="factoryEdit"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
