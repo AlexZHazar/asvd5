@@ -225,7 +225,11 @@ class XLSXLoader(QWidget):
                     l_tables = [i for i in dir(ss) if i.startswith("table_")]
                     for t in l_tables:
                         # print(t)
-                        self.sqlite_cursor.execute(getattr(ss, t))
+                        try:
+                            self.sqlite_cursor.execute(getattr(ss, t))
+                        except Exception as e:
+                            print(e)
+                            raise
 
                     self.folder_input.setText(self._get_settings('source_folder_path', self.sqlite_cursor))
                     self.select_folder_button.clicked.connect(lambda: self.open_folder_dialog('source_folder_path', self.folder_input, 'Выберите папку с .xlsx файлами'))
@@ -422,6 +426,15 @@ class XLSXLoader(QWidget):
 
             if all_dataframes:
                 full_df = pd.concat(all_dataframes, ignore_index=True)
+
+                full_df = full_df.astype({
+                    'A': 'string',
+                    'B': 'string',
+                    'C': 'string',
+                    'D': 'string',
+                    'E': 'string'
+                })
+
                 full_df.to_sql("tmp_xlsx_data", self.sqlite_conn, if_exists="replace", index=False)
 
                 self.db_loading_log = self.si.sqlite_checking_process()
@@ -452,7 +465,14 @@ class XLSXLoader(QWidget):
                 # df_file_eq_generic.to_excel(f"output1_{f}", index=False)
                 # df_file_eq_transposed.to_excel(f"output2_{f}", index=False)
 
-            df_final = pd.concat(rows, ignore_index=True)
+            try:
+                df_final = pd.concat(rows, ignore_index=True)
+            except:
+                # self._logging_message("-" * 40)
+                self._logging_message(self.db_loading_log[0])
+                self._logging_message("-" * 40)
+                self._logging_message(f"[{self.error_mark}] Ошибка: нет данных для обработки")
+                raise
             # df_final.to_excel(f"output.xlsx", index=False)
             df_final.to_sql("inquiry_data_py", self.sqlite_conn, if_exists="replace", index=False)
 
