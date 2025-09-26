@@ -49,6 +49,7 @@ class XLSXLoader(QWidget):
     sa = None
     info_mark = '<span style="color: green;">INFO</span>'
     warning_mark = '<span style="color: blue;">WARNING</span>'
+    # important_mark = '<span style="color: cyan;">IMPORTANT</span>'
     error_mark = '<span style="color: red;">ERROR</span>'
     test_mark = '<span style="color: orange;">TEST</span>'
     base_type = {'work': 'рабочая', 'empty': 'пустая'}

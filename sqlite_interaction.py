@@ -5,6 +5,7 @@ class sqlite_interaction:
         self.sqlite_cursor = sqlite_cursor
         self.output_log = ''
         self.warning_mark = '<span style="color: blue;">WARNING</span>'
+        self.important_mark = '<span style="color: cyan;">IMPORTANT</span>'
         self.error_mark = '<span style="color: red;">ERROR</span>'
 
     def sqlite_checking_process(self):
@@ -31,7 +32,7 @@ class sqlite_interaction:
     ) and t.source_file = c.source_file""")
         rows = self.sqlite_cursor.fetchall()
         for row in rows:
-            self.output_log += f"[{self.warning_mark}] '{row[0]}' данные не финализированы - файл исключен:  {row[1]}  {row[2]}<br>"
+            self.output_log += f"[{self.important_mark}] '{row[0]}' данные не финализированы - файл исключен:  {row[1]}  {row[2]}<br>"
             self.sqlite_cursor.execute(f"delete from tmp_xlsx_data where source_file = '{row[0]}'")
             self.sqlite_cursor.execute(f"delete from tmp_generic_info1 where source_file = '{row[0]}'")
         self.sqlite_cursor.execute("""INSERT INTO tmp_generic_info (
